@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jgDjango</title>
+  <link rel="icon" href="{% static 'images/favicon-96x96.png' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  {% block head %}
+  {% endblock %}
+</head>
+<body>
+  <div class="navbar">
+    <span>
+      <a href="{% url 'page:index' %}">
+        <img class="navbar__logo" src="{% static 'images/jgcat.jpg' %}" alt="jgcat">
+      </a>
+    </span>
+    <span>
+      <a href="{% url 'page:posting_list' %}">글목록</a>
+    </span>
+    {% comment %} <span>
+      <a href="{% url 'page:posting_create' %}">글쓰기</a>
+    </span> {% endcomment %}
+    <span>
+      <a href="{% url 'game:game_list' %}">게임목록</a>
+    </span>
+    {% if user.is_authenticated == False %}
+      <span>
+        <a href="{% url 'account:login' %}">로그인</a>
+      </span>
+      <span>
+        <a href="{% url 'account:signup' %}">회원가입</a>
+      </span>
+    {% endif %}
+    {% if user.is_authenticated %}
+      <span>
+          <a>{{ user.username }}님, 환영합니다! </a>
+      </span>
+      <span>
+        <a href="{% url 'account:logout' %}">로그아웃</a>
+      </span>
+    {% endif %}
+  </div>
+  
+  <div class="container">
+    {% block body %}
+    {% endblock %}
+  </div>
+</body>
+</html>
